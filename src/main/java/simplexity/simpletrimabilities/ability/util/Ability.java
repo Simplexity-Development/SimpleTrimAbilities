@@ -1,6 +1,8 @@
 package simplexity.simpletrimabilities.ability.util;
 
 import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.trim.ArmorTrim;
@@ -47,7 +49,8 @@ public abstract class Ability {
         ABILITIES_BY_TYPE.clear();
         ABILITIES_BY_TRIM.clear();
         // TODO: Populate from configuration.
-        new AttributeAbility("test-attribute", Material.DIAMOND_CHESTPLATE, new ArmorTrim(TrimMaterial.EMERALD, TrimPattern.SENTRY));
+        new AttributeAbility("test-attribute", Material.DIAMOND_CHESTPLATE, new ArmorTrim(TrimMaterial.EMERALD, TrimPattern.SENTRY),
+                Attribute.GENERIC_MAX_HEALTH, "test-attribute", 10, AttributeModifier.Operation.MULTIPLY_SCALAR_1);
         new EventAbility("test-event", Material.DIAMOND_CHESTPLATE, new ArmorTrim(TrimMaterial.LAPIS, TrimPattern.SENTRY));
         new TimedAbility("test-timed", Material.DIAMOND_CHESTPLATE, new ArmorTrim(TrimMaterial.REDSTONE, TrimPattern.SENTRY));
     }
