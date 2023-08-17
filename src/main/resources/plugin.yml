@@ -1,0 +1,6 @@
+name: SimpleTrimAbilities
+version: '${project.version}'
+main: simplexity.simpletrimabilities.SimpleTrimAbilities
+api-version: 1.20
+authors: [ Peashooter101 ]
+description: Adds simple and configurable abilities to trimmed armors.
