@@ -4,22 +4,23 @@ import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.trim.ArmorTrim;
 import org.bukkit.inventory.meta.trim.TrimMaterial;
 import org.bukkit.inventory.meta.trim.TrimPattern;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public abstract class Ability {
 
     private static final HashMap<String, Ability> ABILITY_BY_ID = new HashMap<>();
-    private static final HashMap<Material, List<Ability>> ABILITIES_BY_ARMOR = new HashMap<>();
-    private static final HashMap<AbilityType, List<Ability>> ABILITIES_BY_TYPE = new HashMap<>();
-    private static final HashMap<ArmorTrim, List<Ability>> ABILITIES_BY_TRIM = new HashMap<>();
+    private static final HashMap<Material, Set<Ability>> ABILITIES_BY_ARMOR = new HashMap<>();
+    private static final HashMap<AbilityType, Set<Ability>> ABILITIES_BY_TYPE = new HashMap<>();
+    private static final HashMap<ArmorTrim, Set<Ability>> ABILITIES_BY_TRIM = new HashMap<>();
 
     public final String id;
     public final AbilityType type;
@@ -32,11 +33,11 @@ public abstract class Ability {
         this.trim = trim;
         this.armor = armor;
         ABILITY_BY_ID.put(this.id, this);
-        if (!ABILITIES_BY_ARMOR.containsKey(this.armor)) ABILITIES_BY_ARMOR.put(this.armor, new ArrayList<>());
+        if (!ABILITIES_BY_ARMOR.containsKey(this.armor)) ABILITIES_BY_ARMOR.put(this.armor, new HashSet<>());
         ABILITIES_BY_ARMOR.get(this.armor).add(this);
-        if (!ABILITIES_BY_TYPE.containsKey(this.type)) ABILITIES_BY_TYPE.put(this.type, new ArrayList<>());
+        if (!ABILITIES_BY_TYPE.containsKey(this.type)) ABILITIES_BY_TYPE.put(this.type, new HashSet<>());
         ABILITIES_BY_TYPE.get(this.type).add(this);
-        if (!ABILITIES_BY_TRIM.containsKey(this.trim)) ABILITIES_BY_TRIM.put(this.trim, new ArrayList<>());
+        if (!ABILITIES_BY_TRIM.containsKey(this.trim)) ABILITIES_BY_TRIM.put(this.trim, new HashSet<>());
         ABILITIES_BY_TRIM.get(this.trim).add(this);
     }
 
@@ -50,7 +51,7 @@ public abstract class Ability {
         ABILITIES_BY_TRIM.clear();
         // TODO: Populate from configuration.
         new AttributeAbility("test-attribute", Material.DIAMOND_CHESTPLATE, new ArmorTrim(TrimMaterial.EMERALD, TrimPattern.SENTRY),
-                Attribute.GENERIC_MAX_HEALTH, "test-attribute", 10, AttributeModifier.Operation.MULTIPLY_SCALAR_1);
+                Attribute.GENERIC_MAX_HEALTH, 1, AttributeModifier.Operation.MULTIPLY_SCALAR_1, EquipmentSlot.CHEST);
         new EventAbility("test-event", Material.DIAMOND_CHESTPLATE, new ArmorTrim(TrimMaterial.LAPIS, TrimPattern.SENTRY));
         new TimedAbility("test-timed", Material.DIAMOND_CHESTPLATE, new ArmorTrim(TrimMaterial.REDSTONE, TrimPattern.SENTRY));
     }
@@ -68,7 +69,7 @@ public abstract class Ability {
      * @param armor Armor Item Material Type
      * @return Unmodifiable list of abilities.
      */
-    public static List<Ability> getAbilities(Material armor) { return Collections.unmodifiableList(ABILITIES_BY_ARMOR.getOrDefault(armor, Collections.emptyList())); }
+    public static Set<Ability> getAbilities(Material armor) { return Collections.unmodifiableSet(ABILITIES_BY_ARMOR.getOrDefault(armor, Collections.emptySet())); }
 
     /**
      * Returns a list of abilities based on the Ability Type.
@@ -76,7 +77,7 @@ public abstract class Ability {
      * @param type Type of Ability
      * @return Unmodifiable list of abilities.
      */
-    public static List<Ability> getAbilities(AbilityType type) { return Collections.unmodifiableList(ABILITIES_BY_TYPE.getOrDefault(type, Collections.emptyList())); }
+    public static Set<Ability> getAbilities(AbilityType type) { return Collections.unmodifiableSet(ABILITIES_BY_TYPE.getOrDefault(type, Collections.emptySet())); }
 
 
     /**
@@ -85,7 +86,7 @@ public abstract class Ability {
      * @param trim Armor Trim
      * @return Unmodifiable list of abilities.
      */
-    public static List<Ability> getAbilities(ArmorTrim trim) { return Collections.unmodifiableList(ABILITIES_BY_TRIM.getOrDefault(trim, Collections.emptyList())); }
+    public static Set<Ability> getAbilities(ArmorTrim trim) { return Collections.unmodifiableSet(ABILITIES_BY_TRIM.getOrDefault(trim, Collections.emptySet())); }
 
     /**
      * Performs the ability.

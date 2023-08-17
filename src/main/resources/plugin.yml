@@ -1,5 +1,5 @@
 name: SimpleTrimAbilities
-version: '${project.version}'
+version: '\${project.version}'
 main: simplexity.simpletrimabilities.SimpleTrimAbilities
 api-version: 1.20
 authors: [ Peashooter101 ]
