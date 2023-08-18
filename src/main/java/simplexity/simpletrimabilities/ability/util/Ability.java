@@ -52,7 +52,7 @@ public abstract class Ability {
         // TODO: Populate from configuration.
         new AttributeAbility("test-attribute", Material.DIAMOND_CHESTPLATE, new ArmorTrim(TrimMaterial.EMERALD, TrimPattern.SENTRY),
                 Attribute.GENERIC_MAX_HEALTH, 1, AttributeModifier.Operation.MULTIPLY_SCALAR_1, EquipmentSlot.CHEST);
-        new EventAbility("test-event", Material.DIAMOND_CHESTPLATE, new ArmorTrim(TrimMaterial.LAPIS, TrimPattern.SENTRY));
+        new EventAbility("test-event", Material.DIAMOND_CHESTPLATE, new ArmorTrim(TrimMaterial.LAPIS, TrimPattern.SENTRY), EventType.KILL_MOB);
         new TimedAbility("test-timed", Material.DIAMOND_CHESTPLATE, new ArmorTrim(TrimMaterial.REDSTONE, TrimPattern.SENTRY));
     }
 

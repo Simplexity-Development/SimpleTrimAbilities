@@ -7,12 +7,16 @@ import org.bukkit.inventory.meta.trim.ArmorTrim;
 
 public class EventAbility extends Ability {
 
-    protected EventAbility(String id, Material armor, ArmorTrim trim) {
+    public final EventType eventType;
+
+    protected EventAbility(String id, Material armor, ArmorTrim trim, EventType eventType) {
         super(id, armor, AbilityType.EVENT, trim);
+        this.eventType = eventType;
     }
 
     @Override
     public boolean performAbility(Player player, ItemStack armor) {
         return false;
     }
+
 }
